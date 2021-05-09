@@ -1,0 +1,94 @@
+Problem is solved by Md. Asif Imtiyaj Chowdhury.
+
+#include<stdlib.h>
+#include<stdlib.h>
+
+struct treeNode
+{
+    int data;
+    struct treeNode *left;
+    struct treeNode *right;
+};
+
+struct treeNode *creatingNode(int data)
+{
+    struct treeNode *temp;
+    temp = (struct treeNode *)malloc(sizeof(struct treeNode));
+    temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+
+    return temp;
+};
+
+struct treeNode *insertion(struct treeNode *root, int data)
+{
+    if(root == NULL)
+    {
+        return creatingNode(data);
+    }
+    if(data < root->left)
+    {
+        root->left = insertion(root->left, data);
+    }
+    if(data > root->right)
+    {
+        root->right = insertion(root->right, data);
+    }
+    return root;
+};
+
+void preorder(struct treeNode *root)
+{
+    if(root = NULL)
+    {
+        return;
+    }
+    printf("%d ", root->data);
+    preorder(root->left);
+    preorder(root->right);
+}
+
+int maxDepth(struct treeNode *root)
+{
+    if(root == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        //compute the depth of each subtree
+        int leftDepth = maxDepth(root->left);
+        int rightDepth = maxDepth(root->right);
+
+        //use the larger one
+        if(leftDepth > rightDepth)
+        {
+            return (leftDepth+1);
+        }
+        else
+        {
+            return (rightDepth+1);
+        }
+    }
+}
+
+int main()
+{
+    printf("Input array size: ");
+
+    struct treeNode *root = NULL, *temp;
+    int choice, data, num1, num2;
+
+    scanf("%d", &data);
+    int array[data];
+
+    printf("Input array elements: ");
+    for(int i=0; i<data; i++)
+    {
+        scanf("%d ", num1);
+        array[i] = num1;
+        root = insertion(root, num1);
+    }
+    printf("Height of BST = %d", maxDepth(root));
+}
